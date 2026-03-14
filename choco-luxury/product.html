@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>70% Dark Truffle Box | CHOCO.</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .product-detail-container {
+      padding: calc(var(--nav-height) + 60px) 5% 80px;
+      display: flex;
+      gap: 60px;
+      background: var(--bg-color);
+    }
+
+    .product-gallery {
+      flex: 1 1 50%;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .thumbnail-list {
+      display: flex;
+      gap: 15px;
+    }
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition-smooth);
+    }
+
+    .thumbnail:hover, .thumbnail.active {
+      border-color: var(--gold);
+    }
+
+    .product-info-wrap {
+      flex: 1 1 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .breadcrumbs {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .breadcrumbs a {
+      color: var(--gold);
+    }
+
+    .product-title {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .product-price {
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .product-desc {
+      color: var(--cream);
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .ingredients-box {
+      background: var(--dark-brown);
+      padding: 20px;
+      border-left: 3px solid var(--gold);
+      margin-bottom: 30px;
+    }
+
+    .ingredients-box h4 {
+      margin-bottom: 10px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .ingredients-box p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .qty-btn {
+      background: transparent;
+      border: none;
+      color: var(--cream);
+      width: 40px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: var(--transition-smooth);
+    }
+
+    .qty-btn:hover {
+      background: var(--dark-brown);
+      color: var(--gold);
+    }
+
+    .qty-input {
+      width: 50px;
+      height: 50px;
+      background: transparent;
+      border: none;
+      color: var(--cream);
+      text-align: center;
+      font-size: 1.1rem;
+      border-left: 1px solid rgba(212, 175, 55, 0.3);
+      border-right: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .add-to-cart-btn {
+      flex: 1;
+      height: 50px;
+      background: var(--gold);
+      color: var(--bg-color);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-weight: bold;
+    }
+
+    .add-to-cart-btn:hover {
+      background: var(--cream);
+    }
+    
+    .wishlist-btn {
+      height: 50px;
+      width: 50px;
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .wishlist-btn:hover {
+      background: var(--dark-brown);
+      border-color: var(--gold);
+    }
+
+    /* Reviews Section */
+    .reviews-section {
+      padding: 0 5% 80px;
+    }
+    
+    .reviews-header {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 15px;
+    }
+    
+    .review-item {
+      margin-bottom: 30px;
+    }
+    
+    .review-rating {
+      color: var(--gold);
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+    
+    .review-author {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .review-text {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    @media screen and (max-width: 900px) {
+      .product-detail-container {
+        flex-direction: column;
+      }
+      .main-image {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="nav-brand">CHOCO.</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="gift.html">Gifts</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+        <div class="nav-icons">
+      <a href="javascript:void(0)" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <a href="login.html" id="profileIcon"><i class="fa-solid fa-user"></i></a>
+      <a href="javascript:void(0)" onclick="toggleCart()" class="cart-icon-wrap"><i class="fa-solid fa-bag-shopping"></i><span id="cartCount" class="cart-count">0</span></a>
+    </div>
+    <div class="hamburger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Product Detail -->
+  <div class="product-detail-container fade-in">
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <img src="assets/images/product-1.jpeg" alt="70% Dark Truffle Box" class="main-image" id="mainImage">
+      <div class="thumbnail-list">
+        <img src="assets/images/product-1.jpeg" alt="Thumb 1" class="thumbnail active" onclick="document.getElementById('mainImage').src=this.src">
+        <img src="assets/images/product-2.jpg" alt="Thumb 2" class="thumbnail" onclick="document.getElementById('mainImage').src=this.src">
+        <img src="assets/images/product-3.jpg" alt="Thumb 3" class="thumbnail" onclick="document.getElementById('mainImage').src=this.src">
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info-wrap">
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a> / <a href="shop.html">Shop</a> / Dark Chocolate
+      </div>
+      <h1 class="product-title">70% Dark Truffle Box</h1>
+      <div class="review-rating" style="margin-bottom: 15px;">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        <span style="color: var(--text-muted); margin-left: 10px;">(24 Customer Reviews)</span>
+      </div>
+      <p class="product-price">$45.00</p>
+      
+      <p class="product-desc">
+        Indulge in our exquisite 70% Dark Chocolate Truffles. Handcrafted using single-origin cacao from Venezuela, each truffle offers a deep, intense cocoa flavor with subtle notes of roasted espresso and dark berries. Finished with a delicate dusting of premium cocoa powder for an unparalleled texture.
+      </p>
+
+      <div class="ingredients-box">
+        <h4>Ingredients & Sourcing</h4>
+        <p>Venezuelan Cocoa Mass, Sugar, Cocoa Butter, Fresh Organic Cream, Butter, Madagascar Vanilla Extract. 100% Fair Trade Certified.</p>
+      </div>
+
+      <div class="action-row">
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="document.getElementById('qty').value = Math.max(1, parseInt(document.getElementById('qty').value) - 1)">-</button>
+          <input type="number" id="qty" class="qty-input" value="1" min="1">
+          <button class="qty-btn" onclick="document.getElementById('qty').value = parseInt(document.getElementById('qty').value) + 1">+</button>
+        </div>
+        <button class="add-to-cart-btn" onclick="alert('Item added to cart!')">Add to Cart</button>
+        <button class="wishlist-btn" title="Add to Wishlist"><i class="fa-regular fa-heart"></i></button>
+      </div>
+      
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <i class="fa-solid fa-truck" style="margin-right: 10px;"></i> Next-day temperature-controlled shipping available.
+      </p>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <section class="reviews-section fade-in">
+    <h2 class="reviews-header">Customer Reviews</h2>
+    
+    <div class="review-item">
+      <div class="review-rating">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+      </div>
+      <p class="review-author">Eleanor P. <span style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem; margin-left: 10px;">March 10, 2026</span></p>
+      <p class="review-text">"The finest dark chocolate I've ever had. Truly a rich and captivating experience. The packaging itself was a work of art."</p>
+    </div>
+    
+    <div class="review-item">
+      <div class="review-rating">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+      </div>
+      <p class="review-author">Jonathan M. <span style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem; margin-left: 10px;">February 28, 2026</span></p>
+      <p class="review-text">"Bought this as a gift for my wife and she absolutely loved it. The presentation is premium and the taste is out of this world."</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>CHOCO.</h2>
+        <p>Premium handcrafted chocolates delivered worldwide with absolute perfection and care.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CHOCO. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search for chocolates, gifts..." id="searchInput">
+      <i class="fa-solid fa-xmark close-search" onclick="toggleSearch()"></i>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Your Shopping Bag</h2>
+      <i class="fa-solid fa-xmark close-cart" onclick="toggleCart()"></i>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Items dynamically added here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotalAmount">$0.00</span>
+      </div>
+      <button class="btn btn-solid checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+</body>
+</html>

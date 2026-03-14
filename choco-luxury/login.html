@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | CHOCO.</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--nav-height) + 40px) 5% 80px;
+      background: linear-gradient(rgba(26, 15, 13, 0.8), rgba(26, 15, 13, 0.9)), url('assets/images/about-story.jpg') center/cover no-repeat;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 500px;
+      background: var(--bg-color);
+      padding: 50px 40px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .auth-box h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .auth-box > p {
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--cream);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px;
+      background: rgba(42, 22, 16, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--cream);
+      font-family: var(--font-body);
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-control:focus {
+      border-color: var(--gold);
+      background: var(--dark-brown);
+    }
+
+    .auth-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+    }
+
+    .auth-actions a {
+      color: var(--gold);
+    }
+
+    .auth-actions a:hover {
+      text-decoration: underline;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--bg-color);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: var(--transition-smooth);
+      margin-bottom: 20px;
+    }
+
+    .submit-btn:hover {
+      background: var(--cream);
+    }
+
+    .auth-footer {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .auth-footer a {
+      color: var(--gold);
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="nav-brand">CHOCO.</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="gift.html">Gifts</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+        <div class="nav-icons">
+      <a href="javascript:void(0)" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <a href="login.html" id="profileIcon"><i class="fa-solid fa-user"></i></a>
+      <a href="javascript:void(0)" onclick="toggleCart()" class="cart-icon-wrap"><i class="fa-solid fa-bag-shopping"></i><span id="cartCount" class="cart-count">0</span></a>
+    </div>
+    <div class="hamburger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Login Section -->
+  <div class="auth-container fade-in">
+    <div class="auth-box">
+      <h1>Welcome Back</h1>
+      <p>Sign in to your CHOCO. account</p>
+
+      <form onsubmit="event.preventDefault(); window.location.href='index.html';">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" class="form-control" required placeholder="name@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" required placeholder="••••••••">
+        </div>
+
+        <div class="auth-actions">
+          <label style="display: flex; align-items: center; cursor: pointer; color: var(--text-muted);">
+            <input type="checkbox" style="margin-right: 8px; accent-color: var(--gold);"> Remember Me
+          </label>
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn" onclick="alert('Logged in successfully!')">Sign In</button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="signup.html">Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search for chocolates, gifts..." id="searchInput">
+      <i class="fa-solid fa-xmark close-search" onclick="toggleSearch()"></i>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Your Shopping Bag</h2>
+      <i class="fa-solid fa-xmark close-cart" onclick="toggleCart()"></i>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Items dynamically added here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotalAmount">$0.00</span>
+      </div>
+      <button class="btn btn-solid checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+</body>
+</html>

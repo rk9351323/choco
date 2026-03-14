@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | CHOCO.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Shop Header */
+    .shop-header {
+      padding-top: calc(var(--nav-height) + 60px);
+      padding-bottom: 40px;
+      text-align: center;
+      background: var(--bg-color);
+    }
+
+    .shop-header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    /* Shop Layout */
+    .shop-container {
+      display: flex;
+      padding: 0 5% 80px;
+      gap: 40px;
+      background: var(--bg-color);
+    }
+
+    /* Sidebar Filters */
+    .shop-sidebar {
+      width: 250px;
+      flex-shrink: 0;
+    }
+
+    .filter-group {
+      margin-bottom: 30px;
+    }
+
+    .filter-group h3 {
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .filter-list li {
+      margin-bottom: 10px;
+    }
+
+    .filter-list a {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .filter-list a:hover,
+    .filter-list a.active {
+      color: var(--cream);
+    }
+
+    /* Products Grid */
+    .shop-main {
+      flex: 1;
+    }
+
+    .shop-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      color: var(--text-muted);
+    }
+
+    .sort-select {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 8px 15px;
+      font-family: var(--font-body);
+      outline: none;
+    }
+
+    .sort-select option {
+      background: var(--dark-brown);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    /* Reuse product card styles from index.html -> they can be moved to style.css in a real project but we will add them here for isolation or use global if available. We added them to index.html earlier, let's move card styles to style.css or keep them here. I will just define them here as well. */
+    .product-card {
+      background-color: var(--dark-brown);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .product-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-color: rgba(212, 175, 55, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .product-img-wrapper {
+      height: 300px;
+      overflow: hidden;
+      display: block;
+      /* Make it a link */
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .product-name {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .product-name a {
+      color: var(--cream);
+    }
+
+    .product-price {
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .product-rating {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+
+    .shop-btn {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: var(--transition-smooth);
+    }
+
+    .shop-btn:hover {
+      background: var(--gold);
+      color: var(--bg-color);
+    }
+
+    @media screen and (max-width: 900px) {
+      .shop-container {
+        flex-direction: column;
+      }
+
+      .shop-sidebar {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+
+      .filter-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation (Same as Home) -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="nav-brand">CHOCO.</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="gift.html">Gifts</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="javascript:void(0)" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <a href="login.html" id="profileIcon"><i class="fa-solid fa-user"></i></a>
+      <a href="javascript:void(0)" onclick="toggleCart()" class="cart-icon-wrap"><i
+          class="fa-solid fa-bag-shopping"></i><span id="cartCount" class="cart-count">0</span></a>
+    </div>
+    <div class="hamburger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Shop Header -->
+  <div class="shop-header fade-in">
+    <h1>Our Collection</h1>
+    <p style="color: var(--text-muted);">Explore our handcrafted masterpieces</p>
+  </div>
+
+  <!-- Shop Content -->
+  <div class="shop-container fade-in">
+    <!-- Sidebar -->
+    <aside class="shop-sidebar">
+      <div class="filter-group">
+        <h3>Categories</h3>
+        <ul class="filter-list" id="categoryFilter">
+          <li><a href="javascript:void(0)" class="active" data-filter="all">All Chocolates</a></li>
+          <li><a href="javascript:void(0)" data-filter="dark-chocolate">Dark Chocolate</a></li>
+          <li><a href="javascript:void(0)" data-filter="milk-chocolate">Milk Chocolate</a></li>
+          <li><a href="javascript:void(0)" data-filter="truffles">Truffles</a></li>
+          <li><a href="javascript:void(0)" data-filter="gift-boxes">Gift Boxes</a></li>
+        </ul>
+      </div>
+      <div class="filter-group">
+        <h3>Price Range</h3>
+        <ul class="filter-list" id="priceFilter">
+          <li><a href="javascript:void(0)" class="active" data-price-min="0" data-price-max="999999">All Prices</a></li>
+          <li><a href="javascript:void(0)" data-price-min="0" data-price-max="25">Under $25</a></li>
+          <li><a href="javascript:void(0)" data-price-min="25" data-price-max="50">$25 - $50</a></li>
+          <li><a href="javascript:void(0)" data-price-min="50" data-price-max="100">$50 - $100</a></li>
+          <li><a href="javascript:void(0)" data-price-min="100" data-price-max="999999">Over $100</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Grid -->
+    <main class="shop-main">
+      <div class="shop-controls">
+        <span>Showing 1-4 of 4 results</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="default">Default Sorting</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Rating: Highest</option>
+        </select>
+      </div>
+
+      <div class="grid" id="productGrid">
+        <!-- Product -->
+        <div class="product-card" data-category="dark-chocolate truffles" data-price="45" data-rating="4.5">
+          <a href="product.html" class="product-img-wrapper">
+            <img src="assets/images/product-1.jpeg" alt="Dark Truffles" class="product-img">
+          </a>
+          <div class="product-info">
+            <h3 class="product-name"><a href="product.html">70% Dark Truffle Box</a></h3>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p class="product-price">$45.00</p>
+            <button class="shop-btn">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Product -->
+        <div class="product-card" data-category="milk-chocolate" data-price="38" data-rating="5">
+          <a href="product.html" class="product-img-wrapper">
+            <img src="assets/images/product-2.jpg" alt="Milk Caramel" class="product-img">
+          </a>
+          <div class="product-info">
+            <h3 class="product-name"><a href="product.html">Artisan Milk Caramel</a></h3>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="product-price">$38.00</p>
+            <button class="shop-btn">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Product -->
+        <div class="product-card" data-category="gift-boxes" data-price="85" data-rating="4">
+          <a href="product.html" class="product-img-wrapper">
+            <img src="assets/images/product-3.jpg" alt="Assorted Box" class="product-img">
+          </a>
+          <div class="product-info">
+            <h3 class="product-name"><a href="product.html">Master Assortment</a></h3>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+            </div>
+            <p class="product-price">$85.00</p>
+            <button class="shop-btn">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Product -->
+        <div class="product-card" data-category="dark-chocolate" data-price="18" data-rating="5">
+          <a href="product.html" class="product-img-wrapper">
+            <img src="assets/images/hero.jpg" alt="Dark Bar" class="product-img">
+          </a>
+          <div class="product-info">
+            <h3 class="product-name"><a href="product.html">Single Origin Dark Bar</a></h3>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="product-price">$18.00</p>
+            <button class="shop-btn">Add to Bag</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>CHOCO.</h2>
+        <p>Premium handcrafted chocolates delivered worldwide with absolute perfection and care.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="shop.html">Shop All</a></li>
+          <li><a href="gift.html">Gift Collection</a></li>
+          <li><a href="about.html">Our Story</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p>Email: concierge@choco.com</p>
+        <p>Phone: +1 (800) 123-4567</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CHOCO. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search for chocolates, gifts..." id="searchInput">
+      <i class="fa-solid fa-xmark close-search" onclick="toggleSearch()"></i>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Your Shopping Bag</h2>
+      <i class="fa-solid fa-xmark close-cart" onclick="toggleCart()"></i>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Items dynamically added here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotalAmount">$0.00</span>
+      </div>
+      <button class="btn btn-solid checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+</body>
+
+</html>

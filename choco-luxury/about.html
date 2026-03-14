@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | CHOCO.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .page-header {
+      height: 40vh;
+      background: linear-gradient(rgba(26, 15, 13, 0.8), rgba(26, 15, 13, 0.8)), url('assets/images/about-story.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: var(--nav-height);
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+    }
+
+    .about-story {
+      padding: 100px 5%;
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      background: var(--bg-color);
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .about-img {
+      flex: 1;
+      height: 500px;
+      background: url('assets/images/product-2.jpg') center/cover no-repeat;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .features-section {
+      background: var(--dark-brown);
+      padding: 80px 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      text-align: center;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .feature-box i {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .feature-box h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--cream);
+    }
+
+    .feature-box p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .video-section {
+      padding: 100px 5%;
+      text-align: center;
+      background: var(--bg-color);
+    }
+
+    .video-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .video-section p {
+      color: var(--text-muted);
+      margin-bottom: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .video-container {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto;
+      height: 500px;
+      background: url('assets/images/hero.jpg') center/cover no-repeat;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .play-btn {
+      width: 80px;
+      height: 80px;
+      background: rgba(212, 175, 55, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-color);
+      font-size: 2rem;
+      transition: var(--transition-smooth);
+    }
+
+    .video-container:hover .play-btn {
+      transform: scale(1.1);
+      background: var(--gold);
+    }
+
+    @media screen and (max-width: 900px) {
+      .about-story {
+        flex-direction: column;
+      }
+
+      .about-img {
+        width: 100%;
+      }
+
+      .video-container {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="nav-brand">CHOCO.</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="gift.html">Gifts</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+        <div class="nav-icons">
+      <a href="javascript:void(0)" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></a>
+      <a href="login.html" id="profileIcon"><i class="fa-solid fa-user"></i></a>
+      <a href="javascript:void(0)" onclick="toggleCart()" class="cart-icon-wrap"><i class="fa-solid fa-bag-shopping"></i><span id="cartCount" class="cart-count">0</span></a>
+    </div>
+    <div class="hamburger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header fade-in">
+    <h1>Our Heritage</h1>
+  </div>
+
+  <!-- About Story -->
+  <section class="about-story fade-in">
+    <div class="about-text">
+      <h2>A Century of Passion</h2>
+      <p>Founded in 1920 by Master Chocolatier Francois Dubois in a small atelier in Paris, CHOCO. was born out of a
+        profound passion for the cacao bean. What began as a local obsession quickly became a global synonym for luxury
+        and craftsmanship.</p>
+      <p>Our philosophy is simple: source the finest ingredients nature has to offer, and meticulously craft them into
+        edible masterpieces. We believe that chocolate is more than a treat—it is an experience, a moment of pure bliss
+        that transcends the ordinary.</p>
+    </div>
+    <div class="about-img"></div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section fade-in">
+    <div class="feature-box">
+      <i class="fa-solid fa-leaf"></i>
+      <h3>Ethical Sourcing</h3>
+      <p>We work directly with farmers in Venezuela, Ecuador, and Madagascar to ensure fair compensation and sustainable
+        farming practices.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fa-solid fa-gem"></i>
+      <h3>Premium Ingredients</h3>
+      <p>Only the top 1% of the world's cacao beans are selected for our chocolate, combined with pure cocoa butter and
+        real Madagascar vanilla.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fa-solid fa-medal"></i>
+      <h3>Master Craftsmanship</h3>
+      <p>Each piece is handcrafted by artisans who have spent decades perfecting the intricate art of tempering,
+        molding, and finishing.</p>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="video-section fade-in">
+    <h2>The Making of CHOCO.</h2>
+    <p>Take a glimpse into our Parisian atelier and witness the dedication and artistry that goes into every single
+      truffle and bar.</p>
+    <div
+      style="margin: 0 auto; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(212, 175, 55, 0.3); background: var(--dark-brown); max-width: 1000px; max-height: 70vh; overflow: hidden;">
+      <video style="width: 100%; height: 100%; object-fit: contain; max-height: 70vh;" controls poster="assets/images/hero.jpg" preload="metadata">
+        <source src="veo.mp4" type="video/mp4">
+        Your browser does not support the HTML5 video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>CHOCO.</h2>
+        <p>Premium handcrafted chocolates delivered worldwide with absolute perfection and care.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="shop.html">Shop All</a></li>
+          <li><a href="gift.html">Gift Collection</a></li>
+          <li><a href="about.html">Our Story</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p>Email: concierge@choco.com</p>
+        <p>Phone: +1 (800) 123-4567</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CHOCO. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search for chocolates, gifts..." id="searchInput">
+      <i class="fa-solid fa-xmark close-search" onclick="toggleSearch()"></i>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2>Your Shopping Bag</h2>
+      <i class="fa-solid fa-xmark close-cart" onclick="toggleCart()"></i>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Items dynamically added here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotalAmount">$0.00</span>
+      </div>
+      <button class="btn btn-solid checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+</body>
+
+</html>
