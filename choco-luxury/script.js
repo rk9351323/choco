@@ -124,6 +124,23 @@ function checkout() {
   toggleCart();
 }
 
+// Show toast notification on mobile instead of opening cart
+function showCartToast(name) {
+  let toast = document.getElementById('cartToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cartToast';
+    toast.className = 'cart-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = '✓ ' + name + ' added to bag!';
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2000);
+}
+
 // Attach event listeners to all Add To Bag buttons
 function setupCartButtons() {
   const buttons = document.querySelectorAll('.shop-btn, .add-to-cart-btn');
@@ -165,7 +182,13 @@ function setupCartButtons() {
         cart.push({ name, price, img });
       }
       saveCart();
-      toggleCart();
+
+      // On mobile: show toast, on desktop: open cart drawer
+      if (window.innerWidth <= 768) {
+        showCartToast(name);
+      } else {
+        toggleCart();
+      }
     });
   });
 }
