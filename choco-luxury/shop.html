@@ -208,16 +208,16 @@
       transform: rotate(180deg);
     }
 
-    /* ====== TABLET (max-width: 900px) ====== */
+    /* ====== TABLET & BELOW (max-width: 900px) ====== */
     @media screen and (max-width: 900px) {
       .shop-header h1 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
       }
 
       .shop-container {
         flex-direction: column;
-        padding: 0 4% 60px;
-        gap: 20px;
+        padding: 0 3% 50px;
+        gap: 15px;
       }
 
       .filter-toggle-btn {
@@ -236,17 +236,17 @@
       .shop-sidebar.show {
         max-height: 500px;
         opacity: 1;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
 
       .filter-group {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
 
       .filter-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
       }
 
       .filter-list li {
@@ -255,11 +255,10 @@
 
       .filter-list a {
         display: inline-block;
-        padding: 6px 14px;
+        padding: 5px 12px;
         border: 1px solid rgba(212, 175, 55, 0.2);
         border-radius: 20px;
-        font-size: 0.9rem;
-        transition: var(--transition-smooth);
+        font-size: 0.85rem;
       }
 
       .filter-list a:hover,
@@ -269,63 +268,11 @@
         color: var(--gold);
       }
 
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-
-      .product-img-wrapper {
-        height: 220px;
-      }
-
-      .product-info {
-        padding: 15px;
-      }
-
-      .product-name {
-        font-size: 1.1rem;
-      }
-
-      .product-price {
-        font-size: 1rem;
-      }
-
-      .product-rating {
-        font-size: 0.8rem;
-        margin-bottom: 10px;
-      }
-
-      .shop-btn {
-        padding: 8px;
-        font-size: 0.85rem;
-      }
-    }
-
-    /* ====== SMALL TABLET / LARGE PHONE (max-width: 600px) ====== */
-    @media screen and (max-width: 600px) {
-      .shop-header {
-        padding-top: calc(var(--nav-height) + 30px);
-        padding-bottom: 25px;
-      }
-
-      .shop-header h1 {
-        font-size: 2rem;
-      }
-
-      .shop-header p {
-        font-size: 0.9rem;
-      }
-
-      .shop-container {
-        padding: 0 3% 50px;
-        gap: 15px;
-      }
-
       .shop-controls {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
         align-items: stretch;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
 
       .shop-controls span {
@@ -354,17 +301,17 @@
 
       .product-name {
         font-size: 0.95rem;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
       }
 
       .product-price {
         font-size: 0.9rem;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
       .product-rating {
         font-size: 0.75rem;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
 
       .shop-btn {
@@ -372,79 +319,81 @@
         font-size: 0.8rem;
         letter-spacing: 0.5px;
       }
-
-      .filter-list a {
-        padding: 5px 12px;
-        font-size: 0.85rem;
-      }
     }
 
     /* ====== PHONE (max-width: 480px) ====== */
     @media screen and (max-width: 480px) {
       .shop-header {
-        padding-top: calc(var(--nav-height) + 20px);
-        padding-bottom: 20px;
+        padding-top: calc(var(--nav-height) + 15px);
+        padding-bottom: 15px;
       }
 
       .shop-header h1 {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
       }
 
       .shop-container {
-        padding: 0 3% 40px;
+        padding: 0 2.5% 30px;
       }
 
       .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 8px;
+      }
+
+      .product-card:hover {
+        transform: none;
       }
 
       .product-img-wrapper {
-        height: 150px;
+        height: 120px;
       }
 
       .product-info {
-        padding: 10px 8px;
+        padding: 8px 6px;
       }
 
       .product-name {
-        font-size: 0.85rem;
-        margin-bottom: 3px;
-        line-height: 1.3;
+        font-size: 0.78rem;
+        line-height: 1.2;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .product-price {
-        font-size: 0.85rem;
-        margin-bottom: 8px;
-      }
-
-      .product-rating {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         margin-bottom: 6px;
       }
 
-      .product-rating i {
+      .product-rating {
         font-size: 0.65rem;
+        margin-bottom: 5px;
+      }
+
+      .product-rating i {
+        font-size: 0.6rem;
       }
 
       .shop-btn {
-        padding: 7px 5px;
-        font-size: 0.75rem;
+        padding: 6px 4px;
+        font-size: 0.7rem;
         letter-spacing: 0;
       }
 
       .filter-toggle-btn {
-        padding: 10px 15px;
-        font-size: 0.85rem;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
       }
 
       .filter-group h3 {
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
 
       .filter-list a {
-        padding: 4px 10px;
-        font-size: 0.8rem;
+        padding: 4px 9px;
+        font-size: 0.75rem;
       }
     }
   </style>
