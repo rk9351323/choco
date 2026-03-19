@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | CHOCO Premium Chocolate</title>
+  <meta name="description" content="Secure checkout for CHOCO luxury handcrafted chocolates. Pay with Cashfree.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Site Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Cashfree JS SDK -->
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+  <style>
+    /* ===== Payment Page Specific Styles ===== */
+
+    .payment-hero {
+      min-height: 40vh;
+      background: linear-gradient(135deg, rgba(26, 15, 13, 0.95), rgba(42, 22, 16, 0.9)),
+                  url('assets/images/hero.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+    }
+
+    .payment-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .payment-hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+
+    /* Checkout Container */
+    .checkout-wrapper {
+      max-width: 1100px;
+      margin: -40px auto 80px;
+      padding: 0 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Order Summary Card */
+    .order-summary {
+      background: var(--dark-brown);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 40px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .order-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--copper), var(--gold));
+    }
+
+    .order-summary h2 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .summary-items {
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-item-name {
+      color: var(--cream);
+      font-size: 0.95rem;
+    }
+
+    .summary-item-price {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+    }
+
+    .summary-total span:first-child {
+      color: var(--cream);
+    }
+
+    .summary-total span:last-child {
+      color: var(--gold);
+      font-size: 1.5rem;
+    }
+
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+      padding: 15px;
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      border-radius: 6px;
+    }
+
+    .secure-badge i {
+      color: var(--gold);
+      font-size: 1.3rem;
+    }
+
+    .secure-badge span {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Payment Form Card */
+    .payment-form-card {
+      background: var(--dark-brown);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 40px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payment-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--copper), var(--gold), var(--copper));
+    }
+
+    .payment-form-card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+    }
+
+    .form-row {
+      margin-bottom: 24px;
+    }
+
+    .form-row label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-row input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 6px;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-row input::placeholder {
+      color: rgba(163, 145, 137, 0.6);
+    }
+
+    .form-row input:focus {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.03);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+    }
+
+    .pay-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--copper));
+      border: none;
+      color: var(--bg-color);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    }
+
+    .pay-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .pay-btn .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(26, 15, 13, 0.3);
+      border-top-color: var(--bg-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+
+    .pay-btn.loading .spinner {
+      display: inline-block;
+    }
+
+    .pay-btn.loading .btn-text {
+      opacity: 0.7;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Status Messages */
+    .payment-status {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .payment-status.success {
+      display: flex;
+      background: rgba(46, 160, 67, 0.1);
+      border: 1px solid rgba(46, 160, 67, 0.3);
+      color: #2ea043;
+    }
+
+    .payment-status.error {
+      display: flex;
+      background: rgba(248, 81, 73, 0.1);
+      border: 1px solid rgba(248, 81, 73, 0.3);
+      color: #f85149;
+    }
+
+    .payment-status i {
+      font-size: 1.2rem;
+    }
+
+    /* Trust Badges Row */
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 5%;
+      flex-wrap: wrap;
+    }
+
+    .trust-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .trust-badge i {
+      font-size: 1.8rem;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .checkout-wrapper {
+        grid-template-columns: 1fr;
+        padding: 0 4%;
+      }
+
+      .order-summary,
+      .payment-form-card {
+        padding: 25px;
+      }
+
+      .payment-hero {
+        padding: 100px 20px 50px;
+        min-height: 30vh;
+      }
+
+      .trust-badges {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="nav-brand">CHOCO.</a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#shop">Shop</a></li>
+      <li><a href="index.html#gifts">Gifts</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="login.html" id="profileIcon"><i class="fa-solid fa-user"></i></a>
+    </div>
+    <div class="hamburger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <!-- Payment Hero -->
+  <section class="payment-hero fade-in visible">
+    <div>
+      <h1>Secure Checkout</h1>
+      <p>Complete your order with our trusted payment partner</p>
+    </div>
+  </section>
+
+  <!-- Checkout Section -->
+  <div class="checkout-wrapper">
+    <!-- Left: Order Summary -->
+    <div class="order-summary fade-in visible">
+      <h2><i class="fa-solid fa-bag-shopping" style="margin-right: 12px; font-size: 1.4rem;"></i>Order Summary</h2>
+
+      <div class="summary-items" id="summaryItems">
+        <!-- Populated by JS from cart or defaults to sample -->
+        <div class="summary-item">
+          <span class="summary-item-name">Your selected items will appear here</span>
+          <span class="summary-item-price">—</span>
+        </div>
+      </div>
+
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="summaryTotal">₹0.00</span>
+      </div>
+
+      <div class="secure-badge">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Your payment is protected by 256-bit SSL encryption via Cashfree. We never store your card details.</span>
+      </div>
+    </div>
+
+    <!-- Right: Payment Form -->
+    <div class="payment-form-card fade-in visible">
+      <h2><i class="fa-solid fa-credit-card" style="margin-right: 12px; font-size: 1.4rem;"></i>Payment Details</h2>
+
+      <form id="paymentForm" onsubmit="handlePayment(event)">
+        <div class="form-row">
+          <label for="customerName">Full Name</label>
+          <input type="text" id="customerName" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-row">
+          <label for="customerEmail">Email Address</label>
+          <input type="email" id="customerEmail" placeholder="john@example.com" required>
+        </div>
+
+        <div class="form-row">
+          <label for="customerPhone">Phone Number</label>
+          <input type="tel" id="customerPhone" placeholder="9876543210" pattern="[0-9]{10}" 
+                 title="Please enter a 10-digit phone number" required>
+        </div>
+
+        <div class="form-row">
+          <label for="orderAmount">Amount (₹)</label>
+          <input type="number" id="orderAmount" placeholder="500" min="1" step="0.01" required>
+        </div>
+
+        <button type="submit" class="pay-btn" id="payBtn">
+          <span class="spinner"></span>
+          <span class="btn-text">Pay Securely</span>
+        </button>
+
+        <div class="payment-status" id="paymentStatus">
+          <i></i>
+          <span></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="trust-badges fade-in visible">
+    <div class="trust-badge">
+      <i class="fa-solid fa-lock"></i>
+      <span>Secure Payment</span>
+    </div>
+    <div class="trust-badge">
+      <i class="fa-solid fa-rotate-left"></i>
+      <span>Easy Returns</span>
+    </div>
+    <div class="trust-badge">
+      <i class="fa-solid fa-truck"></i>
+      <span>Free Shipping</span>
+    </div>
+    <div class="trust-badge">
+      <i class="fa-solid fa-headset"></i>
+      <span>24/7 Support</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2>CHOCO.</h2>
+        <p>Premium handcrafted chocolates delivered worldwide with absolute perfection and care.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#shop">Shop All</a></li>
+          <li><a href="index.html#gifts">Gift Collection</a></li>
+          <li><a href="index.html#about">Our Story</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p>Email: rk9351323@gmail.com</p>
+        <p>Phone: +1 (800) 123-4567</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CHOCO. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ======================================================
+    //  CHOCO Cashfree Payment Integration — Frontend Script
+    // ======================================================
+
+    // ---- Configuration ----
+    const BACKEND_URL = "http://localhost:8080";
+
+    // ---- Initialize Cashfree SDK (sandbox mode) ----
+    const cashfree = Cashfree({ mode: "sandbox" });
+
+    // ---- Populate order summary from localStorage cart (if exists) ----
+    (function populateSummary() {
+      const summaryItemsEl = document.getElementById("summaryItems");
+      const summaryTotalEl = document.getElementById("summaryTotal");
+      const amountInput = document.getElementById("orderAmount");
+
+      // Try to read the cart from localStorage (set by main site's script.js)
+      let cart = [];
+      try {
+        cart = JSON.parse(localStorage.getItem("chocoCart")) || [];
+      } catch (e) {
+        cart = [];
+      }
+
+      if (cart.length > 0) {
+        summaryItemsEl.innerHTML = "";
+        let total = 0;
+
+        cart.forEach(item => {
+          const price = parseFloat(item.price) || 0;
+          total += price;
+          summaryItemsEl.innerHTML += `
+            <div class="summary-item">
+              <span class="summary-item-name">${item.name || "Chocolate Item"}</span>
+              <span class="summary-item-price">₹${price.toFixed(2)}</span>
+            </div>
+          `;
+        });
+
+        summaryTotalEl.textContent = `₹${total.toFixed(2)}`;
+        amountInput.value = total.toFixed(2);
+      }
+    })();
+
+    // ---- Handle Payment ----
+    async function handlePayment(e) {
+      e.preventDefault();
+
+      const payBtn = document.getElementById("payBtn");
+      const statusEl = document.getElementById("paymentStatus");
+
+      // Get form values
+      const customerName = document.getElementById("customerName").value.trim();
+      const customerEmail = document.getElementById("customerEmail").value.trim();
+      const customerPhone = document.getElementById("customerPhone").value.trim();
+      const amount = document.getElementById("orderAmount").value;
+
+      // Reset status
+      statusEl.className = "payment-status";
+      statusEl.style.display = "none";
+
+      // Show loading state
+      payBtn.classList.add("loading");
+      payBtn.disabled = true;
+
+      try {
+        // ---- Step 1: Create order on backend ----
+        const response = await fetch(`${BACKEND_URL}/create-order`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount,
+            customerName,
+            customerEmail,
+            customerPhone,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || "Failed to create order");
+        }
+
+        console.log("✅ Order created:", data.order_id);
+
+        // ---- Step 2: Open Cashfree Checkout ----
+        const checkoutOptions = {
+          paymentSessionId: data.payment_session_id,
+          redirectTarget: "_modal", // Opens in a modal overlay
+        };
+
+        const result = await cashfree.checkout(checkoutOptions);
+
+        if (result.error) {
+          // Payment was cancelled or errored
+          console.error("Payment error:", result.error);
+          showStatus("error", result.error.message || "Payment was cancelled or failed. Please try again.");
+        }
+
+        if (result.paymentDetails) {
+          // Payment completed (check status)
+          console.log("Payment details:", result.paymentDetails);
+          showStatus("success", `Payment completed! Order ID: ${data.order_id}`);
+        }
+
+      } catch (error) {
+        console.error("❌ Payment error:", error);
+        showStatus("error", error.message || "Something went wrong. Please try again.");
+      } finally {
+        payBtn.classList.remove("loading");
+        payBtn.disabled = false;
+      }
+    }
+
+    // ---- Show Status Message ----
+    function showStatus(type, message) {
+      const statusEl = document.getElementById("paymentStatus");
+      statusEl.className = `payment-status ${type}`;
+      statusEl.style.display = "flex";
+
+      const icon = type === "success" ? "fa-circle-check" : "fa-circle-exclamation";
+      statusEl.innerHTML = `<i class="fa-solid ${icon}"></i><span>${message}</span>`;
+    }
+
+    // ---- Mobile hamburger toggle ----
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (hamburger) {
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("nav-active");
+        hamburger.classList.toggle("toggle");
+
+        // Animate links
+        document.querySelectorAll(".nav-links li").forEach((link, index) => {
+          if (link.style.animation) {
+            link.style.animation = "";
+          } else {
+            link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+          }
+        });
+      });
+    }
+  </script>
+
+</body>
+
+</html>
